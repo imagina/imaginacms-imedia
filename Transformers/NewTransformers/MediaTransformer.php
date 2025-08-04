@@ -59,15 +59,15 @@ class MediaTransformer extends JsonResource
       'disk' => $this->disk,
       'extension' => $this->extension,
       'zone' => $this->when(isset($this->pivot->zone) && !empty($this->pivot->zone), $this->pivot->zone ?? null),
-      'url' => $this->url ?? '#',
+      'url' => $filePath,//$this->url ?? '#' [currently is returning the same as path],
       'createdByUser' => isset($this->params["ignoreUser"]) ? null : new UserTransformer($this->whenLoaded('createdBy')),
-      'tags' => $this->tags->pluck('name')->toArray(),
+      'tags' => [] //$this->tags->pluck('name')->toArray(),
     ];
 
     //Thumbnails
     foreach ($this->thumbnailManager->all() as $thumbnail) {
       $thumbnailName = $thumbnail->name();
-      $thumbnailPath = $this->isImage() ? $this->getValidatedThumbnail($thumbnailName) : $this->defaultUrl;
+      $thumbnailPath = $data['isImage'] ? $this->getValidatedThumbnail($thumbnailName) : $this->defaultUrl;
       //Include the thumbnails data as relation
       $data['thumbnails'][] = ['name' => $thumbnailName, 'path' => $thumbnailPath, 'size' => $thumbnail->size(),];
       //Include thumnail in main three
