@@ -21,22 +21,29 @@ class CreateThumbnails implements ShouldQueue
    */
   private $disk = null;
   private $file;
+  private $tenantId;
 
-  public function __construct(File $file)
+  public function __construct(File $file, $tenantId = null)
   {
     $this->path = $file->path;
     $this->disk = $file->disk;
     $this->file = $file;
     $this->queue = "media";
+    $this->tenantId = $tenantId;
   }
 
   public function handle()
   {
+    // Initialize tenant
+    if ($this->tenantId) tenancy()->initialize($this->tenantId);
+
     $imagy = app('imagy');
-    app('log')->info('Generating thumbnails for path: ' . $this->path . ((!is_null($this->disk)) ? ' in disk: ' . $this->disk : ''));
+    \Log::info('Generating thumbnails for path: ' . $this->path . ((!is_null($this->disk)) ? ' in disk: ' . $this->disk : ''));
     $imagy->createAll($this->path, $this->disk);
     //update attribute has_thumbnails
     $this->file->has_thumbnails = true;
     $this->file->update();
+
+    if ($this->tenantId) tenancy()->end();
   }
 }

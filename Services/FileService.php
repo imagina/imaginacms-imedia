@@ -138,7 +138,7 @@ class FileService
    */
   private function createThumbnails(File $savedFile)
   {
-    $this->dispatch(new CreateThumbnails($savedFile));
+    $this->dispatch(new CreateThumbnails($savedFile, tenant()->id ?? null));
   }
 
   /**
