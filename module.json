@@ -1,26 +1,12 @@
+
 {
-    "name": "Media",
-    "alias": "media",
-    "description": "A media library, used throughout the CMS.",
-    "keywords": [],
-    "version": "2.5.0",
-    "active": 1,
-    "priority": 1,
+    "name": "Imedia",
+    "alias": "imedia",
+    "description": "manage imedia",
+    "keywords": ["imedia"],
+    "priority": 0,
     "providers": [
-        "Modules\\Media\\Providers\\MediaServiceProvider",
-        "Modules\\Media\\Providers\\RouteServiceProvider",
-        "Modules\\Media\\Image\\ImageServiceProvider",
-        "Intervention\\Image\\ImageServiceProvider"
+        "Modules\\Imedia\\Providers\\ImediaServiceProvider"
     ],
-    "aliases": {
-        "Image": "Intervention\\Image\\Facades\\Image",
-        "Imagy": "Modules\\Media\\Image\\Facade\\Imagy",
-        "FileHelper": "Modules\\Media\\Helpers\\FileHelper",
-        "MediaSingleDirective": "Modules\\Media\\Blade\\Facades\\MediaSingleDirective",
-        "MediaMultipleDirective": "Modules\\Media\\Blade\\Facades\\MediaMultipleDirective",
-        "MediaThumbnailDirective": "Modules\\Media\\Blade\\Facades\\MediaThumbnailDirective"
-    },
-    "files": [
-        "helpers.php"
-    ]
+    "files": []
 }
