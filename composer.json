@@ -1,28 +1,29 @@
 {
-    "name": "imagina/imedia",
-    "description": "",
-    "authors": [
-        {
-            "name": "Imagina Colombia",
-            "email": "soporte@imaginacolombia.com"
-        }
-    ],
-    "extra": {
-        "laravel": {
-            "providers": [],
-            "aliases": {}
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "Modules\\Imedia\\": "app/",
-            "Modules\\Imedia\\Database\\Factories\\": "database/factories/",
-            "Modules\\Imedia\\Database\\Seeders\\": "database/Seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Modules\\Imedia\\Tests\\": "tests/"
-        }
+  "name": "imagina/imedia-module",
+  "description": "Imagina imedia laravel module",
+  "type": "laravel-module",
+  "authors": [
+    {
+      "name": "Imagina Colombia",
+      "email": "soporte@imaginacolombia.com"
     }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [],
+      "aliases": {}
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Modules\\Imedia\\": "app/",
+      "Modules\\Imedia\\Database\\Factories\\": "database/factories/",
+      "Modules\\Imedia\\Database\\Seeders\\": "database/Seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Modules\\Imedia\\Tests\\": "tests/"
+    }
+  }
 }
