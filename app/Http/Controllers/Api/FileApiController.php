@@ -30,8 +30,7 @@ class FileApiController extends CoreApiController
     FileRepository   $modelRepository,
     FileStoreService $fileStoreService,
     FolderService    $folderService
-  )
-  {
+  ) {
     parent::__construct($model, $modelRepository);
     $this->fileStoreService = $fileStoreService;
     $this->folderService = $folderService;
@@ -63,6 +62,38 @@ class FileApiController extends CoreApiController
         } else {
           throw new \Exception(Response::$statusTexts[Response::HTTP_NOT_FOUND], Response::HTTP_NOT_FOUND);
         }
+      }
+
+      //Response
+      $response = ['data' => CoreResource::transformData($savedModel)];
+      DB::commit(); //Commit to Data Base
+    } catch (\Exception $e) {
+      DB::rollback(); //Rollback to Data Base
+      [$status, $response] = $this->getErrorResponse($e);
+    }
+    //Return response
+    return response()->json($response, $status ?? Response::HTTP_CREATED);
+  }
+
+  public function update($criteria, Request $request): JsonResponse
+  {
+
+    DB::beginTransaction();
+    try {
+
+      //Get model data
+      $modelData = $request->input('attributes') ?? [];
+
+      //Get Parameters from URL.
+      $params = $this->getParamsRequest($request);
+
+      //auto-insert the criteria in the data to update
+      isset($params->filter->field) ? $field = $params->filter->field : $field = 'id';
+      $modelData[$field] = $criteria;
+
+      if (isset($modelData['name'])) {
+        //Process Folder
+        $savedModel = $this->folderService->update($criteria, $modelData, $params);
       }
 
       //Response
